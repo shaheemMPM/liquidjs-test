@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Invoice</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script src="https://code.jquery.com/jquery-1.10.2.min.js"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+  </head>
+  <body>
+    <link
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+      rel="stylesheet"
+    />
+
+    <div class="page-content container">
+      <div class="container px-0">
+        <div class="row mt-4">
+          <div class="col-12 col-lg-10 offset-lg-1">
+            <div class="row">
+              <div class="col-sm-6">
+                {%- if config.branding.showLogo -%}
+                <img
+                  src="https://storage.googleapis.com/order-printer/shops/boring-rock/logos/aDa8Eg8aO5O5fmgn.png"
+                />
+                {%- endif -%}
+              </div>
+              <!-- /.col -->
+
+              <div
+                class="
+                  text-95
+                  col-sm-6
+                  align-self-start
+                  d-sm-flex
+                  justify-content-end
+                "
+              >
+                <div class="text-grey-m2">
+                  <h2>{{ config.overview.documentTitle }}</h2>
+
+                  {%- if config.overview.showNo -%}
+                  <div class="my-2 space-between">
+                    <span class="text-600 text-90">INVOICE NO</span>
+                    <span>
+                      {%- if config.overview.showCustomNo -%}
+                      {{ config.overview.customNoPrefix }}1276{{
+                        config.overview.customNoSuffix
+                      }}
+                      {%- else -%} 1276 {%- endif -%}
+                    </span>
+                  </div>
+                  {%- endif -%} {%- if config.overview.showIssueDate -%}
+                  <div class="my-2 space-between">
+                    <span class="text-600 text-90">ISSUE DATE</span>
+                    <span>06-16-2021</span>
+                  </div>
+                  {%- endif -%} {%- if config.overview.showPaymentMethod -%}
+                  <div class="my-2 space-between">
+                    <span class="text-600 text-90">PAYMENT</span>
+                    <span>Manual</span>
+                  </div>
+                  {%- endif -%} {%- if config.overview.showBarCode -%}
+                  <div class="my-2">
+                    <img
+                      src="http://localhost:5000/barcode.png"
+                      alt="barcode"
+                      style="width: 300px; height: 80px"
+                    />
+                  </div>
+                  {%- endif -%} {%- if config.overview.showNote -%}
+                  <div class="my-2 space-between">
+                    <span>{{ config.overview.noteAttribute }}</span>
+                  </div>
+                  {%- endif -%}
+                </div>
+              </div>
+              <!-- /.col -->
+            </div>
+
+            <div class="row mt-4 mb-4">
+              <!-- Shipping -->
+              {%- if config.shipping.showShipping -%}
+              <div class="col-sm-4">
+                {%- if config.shipping.showHeading -%}
+                <div>
+                  <span class="text-600 text-110 text-blue align-middle">{{
+                    config.shipping.heading
+                  }}</span>
+                </div>
+                {%- endif -%}
+                <div class="text-grey-m2">
+                  {%- if config.shipping.showHeading -%}
+                  <div class="my-1">Company</div>
+                  {%- endif -%} {%- if config.shipping.showFullName -%}
+                  <div class="my-1">Fullname</div>
+                  {%- endif -%} {%- if config.shipping.showApartment -%}
+                  <div class="my-1">Apartment</div>
+                  {%- endif -%} {%- if config.shipping.showAddress -%}
+                  <div class="my-1">Address Line 1</div>
+                  <div class="my-1">Address Line 2</div>
+                  {%- endif -%}
+                  <div class="my-1">
+                    {%- if config.shipping.showCity and config.shipping.showCountry -%} 
+                    City, Country 
+                    {%- elsif config.shipping.showCity -%} 
+                    City 
+                    {%- elsif config.shipping.showCountry -%} 
+                    Country 
+                    {%- endif -%}
+                  </div>
+                  {%- if config.shipping.showPhone -%}
+                  <div class="my-1">Phone</div>
+                  {%- endif -%} {%- if config.shipping.showEmail -%}
+                  <div class="my-1">Email</div>
+                  {%- endif -%}
+                </div>
+              </div>
+              {%- endif -%}
+
+              <!-- Billing -->
+              {%- if config.billing.showBilling -%}
+              <div class="col-sm-4">
+                {%- if config.billing.showHeading -%}
+                <div>
+                  <span class="text-600 text-110 text-blue align-middle">{{
+                    config.billing.heading
+                  }}</span>
+                </div>
+                {%- endif -%}
+                <div class="text-grey-m2">
+                  {%- if config.billing.showHeading -%}
+                  <div class="my-1">Company</div>
+                  {%- endif -%} 
+                  {%- if config.billing.showFullName -%}
+                  <div class="my-1">Fullname</div>
+                  {%- endif -%}
+                  
+                  {%- if config.billing.showApartment -%}
+                  <div class="my-1">Apartment</div>
+                  {%- endif -%} {%- if config.billing.showAddress -%}
+                  <div class="my-1">Address Line 1</div>
+                  <div class="my-1">Address Line 2</div>
+                  {%- endif -%}
+                  <div class="my-1">
+                    {%- if config.billing.showCity and config.billing.showCountry
+                    -%} City, Country {%- elsif config.billing.showCity -%} City {%-
+                    elsif config.billing.showCountry -%} Country {%- endif -%}
+                  </div>
+                  {%- if config.billing.showPhone -%}
+                  <div class="my-1">Phone</div>
+                  {%- endif -%} {%- if config.billing.showEmail -%}
+                  <div class="my-1">Email</div>
+                  {%- endif -%}
+                </div>
+              </div>
+              {%- endif -%}
+
+              <!-- Supplier -->
+              {%- if config.supplier.showSupplier -%}
+              <div class="col-sm-4">
+                {%- if config.supplier.showHeading -%}
+                <div>
+                  <span class="text-600 text-110 text-blue align-middle">{{
+                    config.supplier.heading
+                  }}</span>
+                </div>
+                {%- endif -%}
+                <div class="text-grey-m2">
+                  {%- if config.supplier.showBusinessName -%}
+                  <div class="my-1">Business Name</div>
+                  {%- endif -%} {%- if config.supplier.showAddress -%}
+                  <div class="my-1">Address Line 1</div>
+                  <div class="my-1">Address Line 2</div>
+                  {%- endif -%} {%- if config.supplier.showVAT -%}
+                  <div class="my-1">VAT</div>
+                  {%- endif -%} {%- if config.supplier.showRegNo -%}
+                  <div class="my-1">Registered No</div>
+                  {%- endif -%} {%- if config.supplier.showEmail -%}
+                  <div class="my-1">Email</div>
+                  {%- endif -%} {%- if config.supplier.showPhone -%}
+                  <div class="my-1">Phone</div>
+                  {%- endif -%}
+                </div>
+              </div>
+              {%- endif -%}
+            </div>
+
+            <div class="mt-4">
+              <div class="table-responsive">
+                <table
+                  class="
+                    table table-striped table-borderless
+                    border-0 border-b-2
+                    brc-default-l1
+                  "
+                >
+                  <thead class="bg-none bgc-default-tp1">
+                    <tr class="text-white">
+                      {%- if config["line-items"].showCheckBox -%}
+                      <th style="text-align: left">#</th>
+                      {%- endif -%}
+                      <th style="text-align: left">ITEM</th>
+                      {%- if config["line-items"].showSKU -%}
+                      <th style="text-align: left">SKU</th>
+                      {%- endif -%} {%- if config["line-items"].showUnitPrice -%}
+                      <th style="text-align: center">PRICE</th>
+                      {%- endif -%}
+                      <th style="text-align: center">QUANTITY</th>
+                      <th style="text-align: center">TAX</th>
+                      <th style="text-align: center">DISCOUNT</th>
+                      <th style="text-align: end">TOTAL</th>
+                    </tr>
+                  </thead>
+
+                  <tbody class="text-95 line-items text-secondary-d3">
+                    <tr>
+                      {%- if config["line-items"].showCheckBox -%}
+                      <td>
+                        <input style="text-align: left" type="checkbox" />
+                      </td>
+                      {%- endif -%}
+                      <td style="text-align: left">
+                        {%- if config["line-items"].showProductImage -%}
+                        <img
+                          style="
+                            width: 70px;
+                            border-radius: 10px;
+                            margin-right: 10px;
+                          "
+                          src="https://cdn.shopify.com/s/files/1/0479/8522/9983/products/colorful-crystal-stone-500x500_7fdb97ea-d7d7-4994-aac8-3423d87397bf_small.jpg"
+                          alt="item image"
+                        />
+                        {%- endif -%} Title {%- if
+                        config["line-items"].showVariantTitle -%} / variant title
+                        {%- endif -%} {%- if config["line-items"].showVendor -%} /
+                        vendor {%- endif -%}
+                      </td>
+                      {%- if config["line-items"].showSKU -%}
+                      <td style="text-align: center">sku</td>
+                      {%- endif -%} {%- if config["line-items"].showUnitPrice -%}
+                      <td style="text-align: center">
+                        {%- if config["line-items"].showDiscountedPrice -%}
+                        <div><strike>₹ 3,300.00</strike></div>
+                        <div>₹ 3,300.00</div>
+                        {%- else -%}
+                        <div>₹ 3,300.00</div>
+                        {%- endif -%}
+                      </td>
+                      {%- endif -%}
+                      <td style="text-align: center">x11</td>
+                      <td style="text-align: center">11%</td>
+                      <td style="text-align: center">-₹ 0.0</td>
+                      <td style="text-align: end">₹ 36,300.00</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <div class="row mt-3">
+                <div class="col-8">
+                  Extra note such as company or payment information...
+                </div>
+
+                <div class="col-4">
+                  <div class="my-2 space-between">
+                    <span>DISCOUNT</span>
+                    <span>₹ 360.00</span>
+                  </div>
+                  <div class="my-2 space-between">
+                    <span>SUBTOTAL</span>
+                    <span>₹ 36,300.00</span>
+                  </div>
+                  <div class="my-2 space-between">
+                    <span>SHIPPING</span>
+                    <span>₹ 100.00</span>
+                  </div>
+                  <div class="my-2 space-between">
+                    <span>TAX</span>
+                    <span>₹ 150.00</span>
+                  </div>
+                  <div class="my-2 space-between">
+                    <span>GRAND TOTAL</span>
+                    <span>₹ 150.00</span>
+                  </div>
+                </div>
+              </div>
+
+              <hr />
+
+              <div>
+                <h4>NOTE</h4>
+                <p>custom note</p>
+              </div>
+
+              <div>
+                <span class="text-secondary-d1 text-105">Thank you note</span>
+              </div>
+              <div>
+                <span class="text-secondary-d1 text-105">Footer note</span>
+              </div>
+
+              <div style="margin-top: 30px">
+                <img
+                  src="http://localhost:5000/paid.png"
+                  alt="paid"
+                  style="width: 200px"
+                />
+              </div>
+
+              <div class="social-link-list">
+                <div class="social-link-list--website">
+                  <a
+                    href="https://boring-rock.myshopify.com"
+                    target="_blank"
+                    class="social-link social-link--website"
+                  >
+                    <img
+                      src="https://cdn.ordersify.com/images/order-printer/www.png"
+                      alt="Website logo"
+                      class="social-link--facebook__img"
+                    />
+                  </a>
+                </div>
+                <div class="social-link-list--facebook">
+                  <a
+                    href="https://facebook.com/"
+                    target="_blank"
+                    class="social-link social-link--facebook"
+                  >
+                    <img
+                      src="https://cdn.ordersify.com/images/order-printer/facebook.png"
+                      alt="Facebook logo"
+                      class="social-link--facebook__img"
+                    />
+                  </a>
+                </div>
+                <div class="social-link-list--twitter">
+                  <a
+                    href="https://twitter.com/"
+                    target="_blank"
+                    class="social-link social-link--twitter"
+                  >
+                    <img
+                      src="https://cdn.ordersify.com/images/order-printer/twitter.png"
+                      alt="Twitter logo"
+                      class="social-link--twitter__img"
+                    />
+                  </a>
+                </div>
+                <div class="social-link-list--pinterest">
+                  <a
+                    href="https://pinterest.com/"
+                    target="_blank"
+                    class="social-link social-link--pinterest"
+                  >
+                    <img
+                      src="https://cdn.ordersify.com/images/order-printer/pinterest.png"
+                      alt="Pinterest logo"
+                      class="social-link--pinterest__img"
+                    />
+                  </a>
+                </div>
+                <div class="social-link-list--instagram">
+                  <a
+                    href="https://instagram.com/"
+                    target="_blank"
+                    class="social-link social-link--instagram"
+                  >
+                    <img
+                      src="https://cdn.ordersify.com/images/order-printer/instagram.png"
+                      alt="Twitter logo"
+                      class="social-link--instagram__img"
+                    />
+                  </a>
+                </div>
+                <div class="social-link-list--youtube">
+                  <a
+                    href="https://youtube.com/"
+                    target="_blank"
+                    class="social-link social-link--youtube"
+                  >
+                    <img
+                      src="https://cdn.ordersify.com/images/order-printer/youtube.png"
+                      alt="Youtube logo"
+                      class="social-link--youtube__img"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style type="text/css">
+      .social-link-list {
+        text-align: center;
+        margin-left: auto;
+        margin-right: auto;
+        width: 200px;
+        display: flex;
+      }
+      .social-link-list img {
+        width: 35px;
+        margin-right: 20px;
+      }
+      body {
+        margin-top: 20px;
+        color: #484b51;
+        padding-top: 50px;
+        padding-bottom: 100px;
+      }
+      .text-secondary-d1 {
+        color: #728299 !important;
+      }
+      .space-between {
+        display: flex;
+        justify-content: space-between;
+      }
+      .page-header {
+        margin: 0 0 1rem;
+        padding-bottom: 1rem;
+        padding-top: 0.5rem;
+        border-bottom: 1px dotted #e2e2e2;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-pack: justify;
+        justify-content: space-between;
+        -ms-flex-align: center;
+        align-items: center;
+      }
+      .page-title {
+        padding: 0;
+        margin: 0;
+        font-size: 1.75rem;
+        font-weight: 300;
+      }
+      .brc-default-l1 {
+        border-color: #dce9f0 !important;
+      }
+
+      .ml-n1,
+      .mx-n1 {
+        margin-left: -0.25rem !important;
+      }
+      .mr-n1,
+      .mx-n1 {
+        margin-right: -0.25rem !important;
+      }
+      .mb-4,
+      .my-4 {
+        margin-bottom: 1.5rem !important;
+      }
+      .mt-4 {
+        margin-top: 1.5rem !important;
+      }
+
+      hr {
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        border: 0;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .line-items td {
+        vertical-align: middle;
+      }
+
+      .text-grey-m2 {
+        color: #888a8d !important;
+      }
+
+      .text-success-m2 {
+        color: #86bd68 !important;
+      }
+
+      .font-bolder,
+      .text-600 {
+        font-weight: 600 !important;
+      }
+
+      .text-110 {
+        font-size: 110% !important;
+      }
+      .text-blue {
+        color: #478fcc !important;
+      }
+      .pb-25,
+      .py-25 {
+        padding-bottom: 0.75rem !important;
+      }
+
+      .pt-25,
+      .py-25 {
+        padding-top: 0.75rem !important;
+      }
+      .bgc-default-tp1 {
+        background-color: rgba(121, 169, 197, 0.92) !important;
+      }
+      .bgc-default-l4,
+      .bgc-h-default-l4:hover {
+        background-color: #f3f8fa !important;
+      }
+      .page-header .page-tools {
+        -ms-flex-item-align: end;
+        align-self: flex-end;
+      }
+
+      .btn-light {
+        color: #757984;
+        background-color: #f5f6f9;
+        border-color: #dddfe4;
+      }
+      .w-2 {
+        width: 1rem;
+      }
+
+      .text-120 {
+        font-size: 120% !important;
+      }
+      .text-primary-m1 {
+        color: #4087d4 !important;
+      }
+
+      .text-danger-m1 {
+        color: #dd4949 !important;
+      }
+      .text-blue-m2 {
+        color: #68a3d5 !important;
+      }
+      .text-150 {
+        font-size: 150% !important;
+      }
+      .text-60 {
+        font-size: 60% !important;
+      }
+      .text-grey-m1 {
+        color: #7b7d81 !important;
+      }
+      .align-bottom {
+        vertical-align: bottom !important;
+      }
+    </style>
+
+    <script type="text/javascript"></script>
+  </body>
+</html>
